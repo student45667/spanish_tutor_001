@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spanish Verb Conjugation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f4ef; --surface: #ffffff; --border: #e2ddd6; --text: #1a1714;
+    --muted: #7a736b; --accent: #c17f3a; --accent-light: #f5ead9;
+    --header-bg: #1a1714; --header-text: #f7f4ef;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 3rem 1.5rem; }
+  header { text-align: center; margin-bottom: 3rem; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 400; color: var(--text); margin-bottom: 0.5rem; }
+  header p { font-size: 14px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .divider { width: 40px; height: 2px; background: var(--accent); margin: 1rem auto; }
+  .page { max-width: 960px; margin: 0 auto; }
+  .section-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1rem; margin-top: 3rem; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .tab { font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 6px 16px; border-radius: 100px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.18s ease; }
+  .tab:hover { border-color: var(--accent); color: var(--accent); }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 500; }
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; }
+  .card-header { background: var(--header-bg); color: var(--header-text); padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
+  .card-header span { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 400; opacity: 0.7; }
+  .card-header strong { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 400; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  thead th { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 10px 20px; text-align: left; background: #faf8f5; border-bottom: 1px solid var(--border); }
+  thead th:first-child { width: 110px; }
+  tbody tr { transition: background 0.12s; }
+  tbody tr:hover { background: var(--accent-light); }
+  tbody tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
+  td { padding: 10px 20px; font-size: 14px; color: var(--text); }
+  td.pronoun { color: var(--muted); font-size: 13px; font-weight: 300; }
+  .note { font-size: 12px; color: var(--muted); padding: 10px 20px; border-top: 1px solid var(--border); background: #faf8f5; font-style: italic; line-height: 1.6; }
+  .note strong { color: var(--accent); font-style: normal; font-weight: 500; }
+  footer { text-align: center; margin-top: 4rem; font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
+  @media (max-width: 600px) { thead th:first-child { width: 80px; } td, thead th { padding: 8px 10px; font-size: 12px; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <h1>Conjugación Española</h1>
+  <div class="divider"></div>
+  <p>Regular &amp; Irregular Verbs · Five Tenses</p>
+</header>
+
+<!-- REGULAR -->
+<div class="section-label">Regular verbs — trabajar · comer · vivir</div>
+<div class="tabs">
+  <button class="tab active" onclick="show('r-presente', this, 'regular')">presente</button>
+  <button class="tab" onclick="show('r-preterito', this, 'regular')">pretérito</button>
+  <button class="tab" onclick="show('r-imperfecto', this, 'regular')">imperfecto</button>
+  <button class="tab" onclick="show('r-futuro', this, 'regular')">futuro</button>
+  <button class="tab" onclick="show('r-subjuntivo', this, 'regular')">subjuntivo</button>
+</div>
+
+<div id="r-presente" class="section regular active">
+  <div class="card"><div class="card-header"><strong>presente indicativo</strong><span>regular</span></div>
+  <table><thead><tr><th></th><th>trabajar</th><th>comer</th><th>vivir</th></tr></thead><tbody>
+    <tr><td class="pronoun">yo</td><td>trabajo</td><td>como</td><td>vivo</td></tr>
+    <tr><td class="pronoun">tú</td><td>trabajas</td><td>comes</td><td>vives</td></tr>
+    <tr><td class="pronoun">él / ella</td><td>trabaja</td><td>come</td><td>vive</td></tr>
+    <tr><td class="pronoun">nosotros</td><td>trabajamos</td><td>comemos</td><td>vivimos</td></tr>
+    <tr><td class="pronoun">vosotros</td><td>trabajáis</td><td>coméis</td><td>vivís</td></tr>
+    <tr><td class="pronoun">ellos</td><td>trabajan</td><td>comen</td><td>viven</td></tr>
+  </tbody></table></div>
+</div>
+
+<div id="r-preterito" class="section regular">
+  <div class="card"><div class="card-header"><strong>pretérito indefinido</strong><span>regular</span></div>
+  <table><thead><tr><th></th><th>trabajar</th><th>comer</th><th>vivir</th></tr></thead><tbody>
+    <tr><td class="pronoun">yo</td><td>trabajé</td><td>comí</td><td>viví</td></tr>
+    <tr><td class="pronoun">tú</td><td>trabajaste</td><td>comiste</td><td>viviste</td></tr>
+    <tr><td class="pronoun">él / ella</td><td>trabajó</td><td>comió</td><td>vivió</td></tr>
+    <tr><td class="pronoun">nosotros</td><td>trabajamos</td><td>comimos</td><td>vivimos</td></tr>
+    <tr><td class="pronoun">vosotros</td><td>trabajasteis</td><td>comisteis</td><td>vivisteis</td></tr>
+    <tr><td class="pronoun">ellos</td><td>trabajaron</td><td>comieron</td><td>vivieron</td></tr>
+  </tbody></table></div>
+</div>
+
+<div id="r-imperfecto" class="section regular">
+  <div class="card"><div class="card-header"><strong>pretérito imperfecto</strong><span>regular</span></div>
+  <table><thead><tr><th></th><th>trabajar</th><th>comer</th><th>vivir</th></tr></thead><tbody>
+    <tr><td class="pronoun">yo</td><td>trabajaba</td><td>comía</td><td>vivía</td></tr>
+    <tr><td class="pronoun">tú</td><td>trabajabas</td><td>comías</td><td>vivías</td></tr>
+    <tr><td class="pronoun">él / ella</td><td>trabajaba</td><td>comía</td><td>vivía</td></tr>
+    <tr><td class="pronoun">nosotros</td><td>trabajábamos</td><td>comíamos</td><td>vivíamos</td></tr>
+    <tr><td class="pronoun">vosotros</td><td>trabajabais</td><td>comíais</td><td>vivíais</td></tr>
+    <tr><td class="pronoun">ellos</td><td>trabajaban</td><td>comían</td><td>vivían</td></tr>
+  </tbody></table></div>
+</div>
+
+<div id="r-futuro" class="section regular">
+  <div class="card"><div class="card-header"><strong>futuro simple</strong><span>regular</span></div>
+  <table><thead><tr><th></th><th>trabajar</th><th>comer</th><th>vivir</th></tr></thead><tbody>
+    <tr><td class="pronoun">yo</td><td>trabajaré</td><td>comeré</td><td>viviré</td></tr>
+    <tr><td class="pronoun">tú</td><td>trabajarás</td><td>comerás</td><td>vivirás</td></tr>
+    <tr><td class="pronoun">él / ella</td><td>trabajará</td><td>comerá</td><td>vivirá</td></tr>
+    <tr><td class="pronoun">nosotros</td><td>trabajaremos</td><td>comeremos</td><td>viviremos</td></tr>
+    <tr><td class="pronoun">vosotros</td><td>trabajaréis</td><td>comeréis</td><td>viviréis</td></tr>
+    <tr><td class="pronoun">ellos</td><td>trabajarán</td><td>comerán</td><td>vivirán</td></tr>
+  </tbody></table></div>
+</div>
+
+<div id="r-subjuntivo" class="section regular">
+  <div class="card"><div class="card-header"><strong>presente subjuntivo</strong><span>regular</span></div>
+  <table><thead><tr><th></th><th>trabajar</th><th>comer</th><th>vivir</th></tr></thead><tbody>
+    <tr><td class="pronoun">yo</td><td>trabaje</td><td>coma</td><td>viva</td></tr>
+    <tr><td class="pronoun">tú</td><td>trabajes</td><td>comas</td><td>vivas</td></tr>
+    <tr><td class="pronoun">él / ella</td><td>trabaje</td><td>coma</td><td>viva</td></tr>
+    <tr><td class="pronoun">nosotros</td><td>trabajemos</td><td>comamos</td><td>vivamos</td></tr>
+    <tr><td class="pronoun">vosotros</td><td>trabajéis</td><td>comáis</td><td>viváis</td></tr>
+    <tr><td class="pronoun">ellos</td><td>trabajen</td><td>coman</td><td>vivan</td></tr>
+  </tbody></table></div>
+</div>
+
+<!-- IRREGULAR -->
+<div class="section-label" style="margin-top:4rem">Irregular verbs — ser · estar · ir · ver · hacer</div>
+<div class="tabs">
+  <button class="tab active" onclick="show('i-presente', this, 'irregular')">presente</button>
+  <button class="tab" onclick="show('i-preterito', this, 'irregular')">pretérito</button>
+  <button class="tab" onclick="show('i-imperfecto', this, 'irregular')">imperfecto</button>
+  <button class="tab" onclick="show('i-futuro', this, 'irregular')">futuro</button>
+  <button class="tab" onclick="show('i-subjuntivo', this, 'irregular')">subjuntivo</button>
+</div>
+
+<div id="i-presente" class="section irregular active">
+  <div class="card"><div class="card-header"><strong>presente indicativo</strong><span>irregular</span></div>
+  <table><thead><tr><th></th><th>ser</th><th>estar</th><th>ir</th><th>ver</th><th>hacer</th></tr></thead><tbody>
+    <tr><td class="pronoun">yo</td><td>soy</td><td>estoy</td><td>voy</td><td>veo</td><td>hago</td></tr>
+    <tr><td class="pronoun">tú</td><td>eres</td><td>estás</td><td>vas</td><td>ves</td><td>haces</td></tr>
+    <tr><td class="pronoun">él / ella</td><td>es</td><td>está</td><td>va</td><td>ve</td><td>hace</td></tr>
+    <tr><td class="pronoun">nosotros</td><td>somos</td><td>estamos</td><td>vamos</td><td>vemos</td><td>hacemos</td></tr>
+    <tr><td class="pronoun">vosotros</td><td>sois</td><td>estáis</td><td>vais</td><td>veis</td><td>hacéis</td></tr>
+    <tr><td class="pronoun">ellos</td><td>son</td><td>están</td><td>van</td><td>ven</td><td>hacen</td></tr>
+  </tbody></table>
+  <div class="note"><strong>ser</strong> = permanent identity · <strong>estar</strong> = temporary state/location · <strong>ver</strong> = to see · <strong>hacer</strong> = to do / to make</div>
+  </div>
+</div>
+
+<div id="i-preterito" class="section irregular">
+  <div class="card"><div class="card-header"><strong>pretérito indefinido</strong><span>irregular</span></div>
+  <table><thead><tr><th></th><th>ser</th><th>estar</th><th>ir</th><th>ver</th><th>hacer</th></tr></thead><tbody>
+    <tr><td class="pronoun">yo</td><td>fui</td><td>estuve</td><td>fui</td><td>vi</td><td>hice</td></tr>
+    <tr><td class="pronoun">tú</td><td>fuiste</td><td>estuviste</td><td>fuiste</td><td>viste</td><td>hiciste</td></tr>
+    <tr><td class="pronoun">él / ella</td><td>fue</td><td>estuvo</td><td>fue</td><td>vio</td><td>hizo</td></tr>
+    <tr><td class="pronoun">nosotros</td><td>fuimos</td><td>estuvimos</td><td>fuimos</td><td>vimos</td><td>hicimos</td></tr>
+    <tr><td class="pronoun">vosotros</td><td>fuisteis</td><td>estuvisteis</td><td>fuisteis</td><td>visteis</td><td>hicisteis</td></tr>
+    <tr><td class="pronoun">ellos</td><td>fueron</td><td>estuvieron</td><td>fueron</td><td>vieron</td><td>hicieron</td></tr>
+  </tbody></table>
+  <div class="note"><strong>ser</strong> and <strong>ir</strong> share identical pretérito forms — context tells them apart · <strong>hizo</strong> (not hicó) — spelling change to keep the soft c sound</div>
+  </div>
+</div>
+
+<div id="i-imperfecto" class="section irregular">
+  <div class="card"><div class="card-header"><strong>pretérito imperfecto</strong><span>irregular</span></div>
+  <table><thead><tr><th></th><th>ser</th><th>estar</th><th>ir</th><th>ver</th><th>hacer</th></tr></thead><tbody>
+    <tr><td class="pronoun">yo</td><td>era</td><td>estaba</td><td>iba</td><td>veía</td><td>hacía</td></tr>
+    <tr><td class="pronoun">tú</td><td>eras</td><td>estabas</td><td>ibas</td><td>veías</td><td>hacías</td></tr>
+    <tr><td class="pronoun">él / ella</td><td>era</td><td>estaba</td><td>iba</td><td>veía</td><td>hacía</td></tr>
+    <tr><td class="pronoun">nosotros</td><td>éramos</td><td>estábamos</td><td>íbamos</td><td>veíamos</td><td>hacíamos</td></tr>
+    <tr><td class="pronoun">vosotros</td><td>erais</td><td>estabais</td><td>ibais</td><td>veíais</td><td>hacíais</td></tr>
+    <tr><td class="pronoun">ellos</td><td>eran</td><td>estaban</td><td>iban</td><td>veían</td><td>hacían</td></tr>
+  </tbody></table>
+  <div class="note">only 3 irregular imperfectos in all of Spanish: <strong>ser</strong>, <strong>ir</strong>, and <strong>ver</strong> — hacer is regular here</div>
+  </div>
+</div>
+
+<div id="i-futuro" class="section irregular">
+  <div class="card"><div class="card-header"><strong>futuro simple</strong><span>irregular</span></div>
+  <table><thead><tr><th></th><th>ser</th><th>estar</th><th>ir</th><th>ver</th><th>hacer</th></tr></thead><tbody>
+    <tr><td class="pronoun">yo</td><td>seré</td><td>estaré</td><td>iré</td><td>veré</td><td>haré</td></tr>
+    <tr><td class="pronoun">tú</td><td>serás</td><td>estarás</td><td>irás</td><td>verás</td><td>harás</td></tr>
+    <tr><td class="pronoun">él / ella</td><td>será</td><td>estará</td><td>irá</td><td>verá</td><td>hará</td></tr>
+    <tr><td class="pronoun">nosotros</td><td>seremos</td><td>estaremos</td><td>iremos</td><td>veremos</td><td>haremos</td></tr>
+    <tr><td class="pronoun">vosotros</td><td>seréis</td><td>estaréis</td><td>iréis</td><td>veréis</td><td>haréis</td></tr>
+    <tr><td class="pronoun">ellos</td><td>serán</td><td>estarán</td><td>irán</td><td>verán</td><td>harán</td></tr>
+  </tbody></table>
+  <div class="note"><strong>hacer</strong> drops the ce → <strong>har-</strong> stem in future · <strong>ver</strong> and <strong>ir</strong> are regular in future</div>
+  </div>
+</div>
+
+<div id="i-subjuntivo" class="section irregular">
+  <div class="card"><div class="card-header"><strong>presente subjuntivo</strong><span>irregular</span></div>
+  <table><thead><tr><th></th><th>ser</th><th>estar</th><th>ir</th><th>ver</th><th>hacer</th></tr></thead><tbody>
+    <tr><td class="pronoun">yo</td><td>sea</td><td>esté</td><td>vaya</td><td>vea</td><td>haga</td></tr>
+    <tr><td class="pronoun">tú</td><td>seas</td><td>estés</td><td>vayas</td><td>veas</td><td>hagas</td></tr>
+    <tr><td class="pronoun">él / ella</td><td>sea</td><td>esté</td><td>vaya</td><td>vea</td><td>haga</td></tr>
+    <tr><td class="pronoun">nosotros</td><td>seamos</td><td>estemos</td><td>vayamos</td><td>veamos</td><td>hagamos</td></tr>
+    <tr><td class="pronoun">vosotros</td><td>seáis</td><td>estéis</td><td>vayáis</td><td>veáis</td><td>hagáis</td></tr>
+    <tr><td class="pronoun">ellos</td><td>sean</td><td>estén</td><td>vayan</td><td>vean</td><td>hagan</td></tr>
+  </tbody></table>
+  <div class="note"><strong>hacer</strong> → <strong>hag-</strong> stem in subjunctive · <strong>ir</strong> → vaya (completely irregular)</div>
+  </div>
+</div>
+
+<footer>trabajar · comer · vivir · ser · estar · ir · ver · hacer</footer>
+
+</div>
+<script>
+function show(id, btn, group) {
+  document.querySelectorAll('.section.' + group).forEach(s => s.classList.remove('active'));
+  btn.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
+
+<!-- inject before </body> -->
+<script>
+// remove old footer, we'll add a new one after the shortcuts section
+document.querySelector('footer').remove();
+</script>
+
+<div class="section-label" style="margin-top:4rem">10 shortcuts — say almost anything without complex grammar</div>
+
+<div class="card" style="margin-bottom:1.5rem">
+  <div class="card-header"><strong>instant Spanish — high coverage, low effort</strong><span>colloquial</span></div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:40px">#</th>
+        <th style="width:220px">formula</th>
+        <th style="width:200px">example</th>
+        <th>meaning &amp; when to use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="pronoun">1</td>
+        <td><strong>voy a + infinitive</strong></td>
+        <td><em>Voy a trabajar</em></td>
+        <td>I'm going to work — replaces the entire future tense in conversation</td>
+      </tr>
+      <tr>
+        <td class="pronoun">2</td>
+        <td><strong>quiero + infinitive</strong></td>
+        <td><em>Quiero comer</em></td>
+        <td>I want to eat — expresses desire, works in almost any situation</td>
+      </tr>
+      <tr>
+        <td class="pronoun">3</td>
+        <td><strong>puedo + infinitive</strong></td>
+        <td><em>¿Puedo ir?</em></td>
+        <td>Can I go? — asks or states ability/permission, extremely common</td>
+      </tr>
+      <tr>
+        <td class="pronoun">4</td>
+        <td><strong>tengo que + infinitive</strong></td>
+        <td><em>Tengo que trabajar</em></td>
+        <td>I have to work — expresses obligation, replaces complex must/should constructions</td>
+      </tr>
+      <tr>
+        <td class="pronoun">5</td>
+        <td><strong>me gusta + noun/infinitive</strong></td>
+        <td><em>Me gusta el café</em></td>
+        <td>I like coffee — covers likes, preferences, and enjoyment universally</td>
+      </tr>
+      <tr>
+        <td class="pronoun">6</td>
+        <td><strong>no entiendo / no sé</strong></td>
+        <td><em>No entiendo, ¿puedes repetir?</em></td>
+        <td>I don't understand / I don't know — essential survival phrases, use freely</td>
+      </tr>
+      <tr>
+        <td class="pronoun">7</td>
+        <td><strong>está + adjective/location</strong></td>
+        <td><em>Está muy lejos</em></td>
+        <td>It's very far — describes current states and locations without conjugation complexity</td>
+      </tr>
+      <tr>
+        <td class="pronoun">8</td>
+        <td><strong>¿me puede + infinitive?</strong></td>
+        <td><em>¿Me puede ayudar?</em></td>
+        <td>Can you help me? — polite request formula, works in any service situation</td>
+      </tr>
+      <tr>
+        <td class="pronoun">9</td>
+        <td><strong>acabo de + infinitive</strong></td>
+        <td><em>Acabo de comer</em></td>
+        <td>I just ate — replaces past tense for very recent actions, natural and common</td>
+      </tr>
+      <tr>
+        <td class="pronoun">10</td>
+        <td><strong>estoy + gerund (-ando/-iendo)</strong></td>
+        <td><em>Estoy trabajando</em></td>
+        <td>I am working right now — covers all ongoing actions, just add -ando (ar) or -iendo (er/ir)</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note">
+    These 10 formulas use only present-tense forms of <strong>ir, querer, poder, tener, gustar, ser, estar</strong> — all already in your tables above.
+    Master these and you can communicate in 90% of everyday situations before touching the subjunctive.
+  </div>
+</div>
+
+<footer style="text-align:center;margin-top:4rem;margin-bottom:2rem;font-size:12px;color:var(--muted);letter-spacing:0.05em;font-family:'DM Sans',sans-serif">
+  trabajar · comer · vivir · ser · estar · ir · ver · hacer
+</footer>
