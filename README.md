@@ -47,21 +47,26 @@ Browser (HTML/JS)
       │  POST /stream   (streaming text)
       │  POST /clear
       ▼
-FastAPI server  ─── SPANISH_CHAT_WEBIF_jun12_2026-2.py
+FastAPI server  ─── SPANISH_CHAT_WEBIF_MISTRAL_jun14_2026.py
       │
-      │  ChatML prompt: system + history + user input
+      │  Mistral instruct prompt:
+      │  <s>[INST] system + context_starter + user_0 [/INST] bot_0 </s>
+      │     [INST] user_1 [/INST] bot_1 </s>
+      │     [INST] user_N [/INST]   ← model completes here
       ▼
-llama_cpp  (Qwen3.5-9B-Q4_K_M.gguf, RTX 3070, ~67 tok/sec)
+llama_cpp  (Mistral-7B-v0.2-Q5_K_M.gguf, RTX 3070, ~67 tok/sec)
       │
       ▼
 Streaming tokens → back to browser → rendered as markdown
 ```
 
-**Session memory** — the backend keeps conversation history per session in RAM. The prompt builder trims old turns to fit within the 16K context window automatically.
+**Session memory** — the backend keeps conversation history per session in RAM. The prompt builder trims oldest turns from the front when context fills up — recent turns are always preserved.
 
 **Vocabulary persistence** — `///word` entries are appended to `vocabulary.md` on disk. Load this file into any session with `/load vocabulary.md` to give the AI full context of your known words.
 
-**System prompt** — the tutor's personality, level calibration, correction style, and all activity modes are defined in a single `SYSTEM_PROMPT` string in the Python file. Easy to edit.
+**System prompt** — the tutor's personality, level calibration, correction style, and all activity modes are defined in `SYSTEM_PROMPT`. At startup, `context_starter.md` is loaded and appended to the system prompt automatically — giving the model output format examples before any user interaction.
+
+**Context starter** — `context_starter.md` contains real examples of desired model output for each command (`/story`, `/vocab`, `///word`, `/translate`). Injected once at startup into the system prompt so the model mirrors this format consistently across all sessions.
 
 ---
 
@@ -69,13 +74,14 @@ Streaming tokens → back to browser → rendered as markdown
 
 ```
 spanish_tutor_001/
-├── SPANISH_CHAT_WEBIF_jun12_2026-2.py   # FastAPI backend + LLM inference
-├── ES_TUTOR_chat_jun12_2026.html        # Single-file frontend (served by FastAPI)
-├── spanish_conjugation.md               # Verb conjugation reference (load into context)
-├── spanish_conjugation-2.html           # Same reference as interactive HTML
-├── vocabulary.md                        # Auto-saved vocab words (/// shortcut)
-├── git_push.sh                          # Git push helper script
-├── images/                              # Screenshots for README
+├── SPANISH_CHAT_WEBIF_MISTRAL_jun14_2026.py  # FastAPI backend + LLM inference (Mistral)
+├── ES_TUTOR_chat_jun12_2026.html             # Single-file frontend (served by FastAPI)
+├── context_starter.md                         # Few-shot output examples injected into system prompt
+├── spanish_conjugation.md                     # Verb conjugation reference (load into context)
+├── spanish_conjugation-2.html                 # Same reference as interactive HTML
+├── vocabulary.md                              # Auto-saved vocab words (/// shortcut)
+├── git_push.sh                                # Git push helper script
+├── images/                                    # Screenshots for README
 └── README.md
 ```
 
@@ -117,17 +123,30 @@ http://<server-ip>:8000
 
 ## Model configuration
 
-Configured for **Qwen3.5-9B-Q4_K_M** — change `MODEL_PATH` at the top of the Python file for any GGUF model.
+Supports two models — switch by commenting/uncommenting `MODEL_PATH` at the top of the Python file.
+
+### Active: Mistral-7B-Instruct-v0.2-Q5_K_M
 
 | Setting | Value | Why |
 |---|---|---|
-| `MAX_TOKENS` | 512 | Short conversational replies, not essays |
-| `TEMPERATURE` | 0.75 | Natural word variety, not robotic |
+| `CONTEXT_LEN` | 10000 | Safe on 8GB VRAM at Q5 quant |
+| `MAX_TOKENS` | 1024 | Longer than Qwen — Mistral needs room for structured output |
+| `TEMPERATURE` | 0.3 | Low — consistent, predictable format |
 | `TOP_P` | 0.92 | Reduces nonsense vocabulary |
 | `TOP_K` | 50 | Wider candidate pool for natural phrasing |
 | `REPEAT_PENALTY` | 1.05 | Light — Spanish naturally repeats some words |
-| `CONTEXT_LEN` | 16384 | Fits full session + conjugation reference |
-| `/no_think` | in system prompt | Disables Qwen3 thinking mode — faster responses |
+| Prompt format | `[INST]...[/INST]` | Mistral instruct tokens — no ChatML |
+| `context_starter.md` | injected at startup | Few-shot examples lock in output format |
+
+### Available (comment in): Qwen3.5-9B-Q4_K_M
+
+| Setting | Value | Why |
+|---|---|---|
+| `CONTEXT_LEN` | 16384 | Larger context window |
+| `MAX_TOKENS` | 512 | Shorter — Qwen more concise by default |
+| `TEMPERATURE` | 0.75 | More creative |
+| Prompt format | `<\|im_start\|>...<\|im_end\|>` | ChatML tokens |
+| `/no_think` | in system prompt | Disables Qwen3 thinking mode |
 
 ---
 
@@ -187,7 +206,10 @@ Goal:            Conversational Spanish
 | Component | Tech |
 |---|---|
 | LLM inference | llama-cpp-python (CUDA) |
-| Model | Qwen3.5-9B-Q4_K_M |
+| Model (active) | Mistral-7B-Instruct-v0.2-Q5_K_M |
+| Model (available) | Qwen3.5-9B-Q4_K_M |
+| Prompt format | Mistral instruct `[INST]...[/INST]` / Qwen ChatML |
+| Output consistency | `context_starter.md` injected into system prompt at startup |
 | API server | FastAPI + Uvicorn |
 | Frontend | Vanilla HTML/CSS/JS (single file) |
 | Markdown rendering | marked.js |
@@ -195,3 +217,19 @@ Goal:            Conversational Spanish
 | Math rendering | MathJax 3 |
 | Diagrams | mermaid.js |
 | Hardware | RTX 3070 8GB, Ryzen 7 5800X |
+
+---
+
+## Updates — jun 14 2026
+
+- **Switched to Mistral-7B-Instruct-v0.2-Q5_K_M** — both models remain in the script, toggled by commenting/uncommenting `MODEL_PATH`
+- **Prompt format rewritten** — ChatML (`<|im_start|>`) replaced with Mistral instruct format (`<s>[INST]...[/INST]`) in `build_prompt()`
+- **`context_starter.md`** — new file containing real few-shot output examples for all commands. Loaded at startup and appended to `SYSTEM_PROMPT` to give the model consistent output format before any conversation starts
+- **Latin American Spanish** — system prompt updated to target Chilean, Mexican, Peruvian, Panamanian dialects
+- **Student profile generalised** — renamed from "Alex" to "User" for easier reuse
+- **`CONTEXT_LEN` reduced to 10000** — safe on 8GB VRAM with Q5 quant + context_starter overhead
+- **`TEMPERATURE` lowered to 0.3** — improves format consistency for structured outputs (tables, vocab lists, stories)
+- **`MAX_TOKENS` raised to 1024** — Mistral needs more room to produce full structured responses
+- **Bug fix** — history now saves `reply_no_internal_thoughts` (cleaned reply) instead of raw reply with `<think>` blocks
+- **`enable_thinking` removed** from `Llama()` call — Qwen3-only parameter, not supported by Mistral
+- **`/no_think` removed** from system prompt — Qwen3-only directive
